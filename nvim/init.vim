@@ -1,11 +1,22 @@
-set nocompatible              " be iMproved, required
+set nocompatible              "  be iMproved, required
 filetype off                  " required
+
+" Copy the relative path of the current file to the clipboard
+nmap <Leader>cf :silent !echo -n % \| pbcopy<Enter>
+
+" ====================== Persistent Undo =============================
+" Keep undo history across sessions, by storing in file.
+if has('persistent_undo')
+	silent !mkdir ~/.vim/backups > /dev/null 2>&1
+	set undodir=~/.vim/backups
+	set undofile
+endif
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
-" call vundle#begin('~/some/path/here')
+"call vundle#begin('~/some/path/here')
 " set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 " let Vundle manage Vundle, required
@@ -20,7 +31,7 @@ Plugin 'tpope/vim-fugitive'
 " Git plugin not hosted on GitHub
 Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/ano/.config/nvim/plugin'
+" Plugin 'file:///home/ano/.vim/bundle'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': '/vim'}
@@ -29,6 +40,7 @@ Plugin 'rstacruz/sparkup', {'rtp': '/vim'}
 Plugin 'ascenator/L9', {'name': 'newL9'}
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 " Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-syntastic/syntastic'
@@ -46,6 +58,11 @@ Plugin 'edkolev/tmuxline.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'edkolev/promptline.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'janko-m/vim-test'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'henrik/vim-indexed-search'
+Plugin 'nixprime/cpsm'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -63,12 +80,14 @@ filetype plugin on
 " Put your non-Plugin stuff after this line
 
 " Basics
+set number
 set autoread
 set autoindent
 set shiftwidth=4
 set smartindent
 set ignorecase
 set hlsearch
+set incsearch
 set t_Co=256
 set tabstop=4
 set copyindent
@@ -77,6 +96,12 @@ filetype indent on
 set smartcase
 syntax on
 set showcmd
+
+" Autosave
+autocmd FocusLost * silent! wa
+
+" Autoresize splits on window resizing
+autocmd VimResized * wincmd = 
 
 "Status line stuffs..
 fun! <SID>SetStatusLine()
@@ -130,6 +155,26 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" NERDTree
+" auto open on vim open
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" findin the right file and opening on it
+nnoremap <Leader>f :NERDTreeToggle<Enter>
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+
+" closing automatically
+let NERDTreeQuitOnOpen = 1
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" deletin files
+let NERDTreeAutoDeleteBuffer = 1
+
+" makin it prettier
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 " let g:indent_guides_guide_size = 1
 " let g:indent_guides_color_change_percent = 3
