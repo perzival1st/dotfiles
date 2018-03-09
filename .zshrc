@@ -1,5 +1,8 @@
 #for tmux stuff..
 alias tmux="tmux -2"
+alias ipaddr="dig +short myip.opendns.com @resolver1.opendns.com"
+alias wetha='curl -s "http://wttr.in/~Dar-es-salaam" | head -n 38'
+alias chuga='curl -s "http://wttr.in/~Arusha" | head -n 38'
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -13,6 +16,9 @@ cfg-zsh-history() { $EDITOR $HISTFILE ;}
 
 # Path to your oh-my-zsh installation.
   export ZSH=/home/ano/.oh-my-zsh
+
+# Path to GOLang
+  export GOPATH=$HOME
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -141,6 +147,12 @@ bindkey "^I" expand-or-complete-with-dots
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias copy="rsync -rP"
+alias vncview="x11vnc -noxdamage -usepw"
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # open file with default program base on extension
 # Ex: 'alias -s avi=mplayer' makes 'file.avi' execute 'mplayer file.avi'
@@ -154,5 +166,6 @@ alias -s {cbr,cbz}="background $COMICER"
 # might conflict with emacs org mode
 alias -s {at,ch,com,de,net,org}="background $BROWSER"
 
+alias serv='ssh anorebel@archnoob.com'
 
 source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
