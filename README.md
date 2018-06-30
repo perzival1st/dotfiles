@@ -1,9 +1,9 @@
 # dotfiles
 
-![bash term](https://github.com/AnoRebel/dotfiles/blob/master/screenshots/tmux-term)
+![bash term](screenshots/bash-term "Bash")
 
 
-![tmux term](screenshots/tmux-term)
+![tmux term](screenshots/tmux-term "Tmux")
 
 
-![zsh term] (screenshots/zsh-term)
+![zsh term](screenshots/zsh-term "Zsh")
